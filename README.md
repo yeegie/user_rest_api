@@ -60,7 +60,7 @@ password=password
 database=user_rest_api
 ```
 
-3. Example for local (mysql)
+3. Example for local (sqlite3)
 
 ``` ini
 [API]
