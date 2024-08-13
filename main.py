@@ -5,7 +5,7 @@ from contextlib import asynccontextmanager
 from data.config import API
 
 from database import init_database, close_database
-from routers import user_router
+from routers import user_router, position_router
 
 import logging
 
@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title='USER REST API', debug=True, lifespan=lifespan)
 app.include_router(user_router, prefix='/user', tags=['user'])
+app.include_router(position_router, prefix='/position', tags=['position'])
 
 if __name__ == '__main__':
     run(app, host=API.host, port=API.port)
-    pass
