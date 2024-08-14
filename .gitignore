@@ -35,7 +35,7 @@ config.ini
 */__pycache__
 *.sqlite3
 */TODO.txt
-*.pyc
+*/*.pyc
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
