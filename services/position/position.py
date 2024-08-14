@@ -10,28 +10,31 @@ logger = logging.getLogger(__name__)
 
 
 class PositionService(PositionCRUD):
-    async def create(dto: PositionCreateDto):
+    def __init__(self) -> None:
+        self.position = Position
+
+    async def create(self, dto: PositionCreateDto):
         "### Create position from dto"
-        position = await Position.create(
+        position = await self.position.create(
             name=dto.name,
         )
 
         return await position.to_schema()
 
-    async def read(position_id: int):
+    async def read(self, position_id: int):
         "### Get positon from id"
-        position = await Position.get_or_none(id=id)
+        position = await self.position.get_or_none(id=position_id)
 
         if position is None:
             raise DoesNotExist(f'pk={position_id} | Position not found.')
         return await position.to_schema()
 
-    async def update(position_id: int, dto: PositionUpdateDto):
+    async def update(self, position_id: int, dto: PositionUpdateDto):
         pass
 
-    async def delete(position_id: int):
+    async def delete(self, position_id: int):
         '''### Delete Position by position_id'''
-        position = await Position.get_or_none(id=position_id)
+        position = await self.position.get_or_none(id=position_id)
 
         if position is None:
             raise DoesNotExist(f'pk={position_id} | Position not found.')

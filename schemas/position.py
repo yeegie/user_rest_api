@@ -8,7 +8,7 @@ class PositionSchema(BaseModel):
 
 class PositionCreateDto(BaseModel):
     name: str
-    user_id: Optional[int]
+    user_id: Optional[int] = None
 
 
 class PositionUpdateDto(BaseModel):
