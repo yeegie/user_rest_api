@@ -1,4 +1,6 @@
 from pydantic import BaseModel
+from .position import PositionSchema
+from typing import Dict
 
 
 class UserSchema(BaseModel):

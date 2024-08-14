@@ -1,18 +1,18 @@
 from fastapi import APIRouter, HTTPException
-
 from schemas.user import UserCreateDto, UserUpdateDto
-from services.user.user import UserService
-
 from tortoise.exceptions import DoesNotExist
 
+from container import container
+from services import UserService
 
 router = APIRouter()
+user_service: UserService = container.get("user_service")
 
 
 @router.post('/', status_code=201)
 async def create(dto: UserCreateDto):
     try:
-        return await UserService.create(dto)
+        return await user_service.create(dto)
     except Exception as ex:
         raise HTTPException(500, detail=str(ex))
 
@@ -20,7 +20,7 @@ async def create(dto: UserCreateDto):
 @router.put('/{id}', status_code=201)
 async def update(id: int, dto: UserUpdateDto):
     try:
-        return await UserService.update(id, dto)
+        return await user_service.update(id, dto)
     except DoesNotExist as ex:
         raise HTTPException(404, detail=str(ex))
     except Exception as ex:
@@ -30,7 +30,7 @@ async def update(id: int, dto: UserUpdateDto):
 @router.get('/{id}')
 async def get(id: int):
     try:
-        return await UserService.read(id=id)
+        return await user_service.read(user_id=id)
     except DoesNotExist as ex:
         raise HTTPException(404, detail=str(ex))
     except Exception as ex:
@@ -40,9 +40,17 @@ async def get(id: int):
 @router.delete('/{id}', status_code=204)
 async def delete(id: int):
     try:
-        await UserService.delete(id)
+        await user_service.delete(id)
         return 'ok'
     except DoesNotExist as ex:
         raise HTTPException(404, detail=str(ex))
+    except Exception as ex:
+        raise HTTPException(500, detail=str(ex))
+
+
+@router.get('/')
+async def all():
+    try:
+        return await user_service._all()
     except Exception as ex:
         raise HTTPException(500, detail=str(ex))

@@ -1,37 +1,43 @@
 from .crud import UserCRUD
+from typing import List
 
-from tortoise.exceptions import DoesNotExist
+from tortoise.exceptions import DoesNotExist, IntegrityError
+from tortoise.query_utils import Prefetch
 
 from schemas.user import UserSchema, UserUpdateDto, UserCreateDto
-from database.models.user import User
+from database.models import User
 
 import logging
 logger = logging.getLogger(__name__)
 
 
 class UserService(UserCRUD):
-    @staticmethod
-    async def read(user_id: int) -> UserSchema:
+    def __init__(self) -> None:
+        self.user = User
+
+    async def read(self, user_id: int) -> UserSchema:
         '''### Get User by user_id'''
-        user = await User.get_or_none(id=user_id)
+        user = await self.user.get_or_none(id=user_id).prefetch_related("position")
+
+        print(user)
+
         if user is None:
             raise DoesNotExist(f'pk={user_id} | User not found.')
+        
         return await user.to_schema()
 
-    @staticmethod
-    async def create(dto: UserCreateDto) -> UserSchema:
+    async def create(self, dto: UserCreateDto) -> UserSchema:
         '''### Create User from'''
-        user = await User.create(
+        user = await self.user.create(
             fio=dto.fio,
             email=dto.email,
         )
 
         return await user.to_schema()
 
-    @staticmethod
-    async def update(user_id: int, dto: UserUpdateDto) -> UserSchema:
+    async def update(self, user_id: int, dto: UserUpdateDto) -> UserSchema:
         '''### Update User by id'''
-        user = await User.get_or_none(id=user_id)
+        user = self.user.get_or_none(id=user_id)
 
         if user is None:
             raise DoesNotExist(f'pk={user_id} | User not found.')
@@ -43,13 +49,16 @@ class UserService(UserCRUD):
 
         return await user.to_schema()
 
-    @staticmethod
-    async def delete(user_id: int) -> None:
+    async def delete(self, user_id: int) -> None:
         '''### Delete User by user_id'''
-        user = await User.get_or_none(id=user_id)
+        user = await self.user.get_or_none(id=user_id)
 
         if user is None:
             raise DoesNotExist(f'pk={user_id} | User not found.')
         await user.delete()
 
         logger.info(f'[{user_id}] User - DELETE')
+
+    async def _all(self):
+        users = await self.user.all()
+        return [await users.to_schema() for users in users]

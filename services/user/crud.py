@@ -6,17 +6,23 @@ from schemas.user import UserCreateDto, UserUpdateDto
 
 class UserCRUD(ABC):
     @abstractmethod
-    async def create(dto: UserCreateDto):
+    async def create(self, dto: UserCreateDto):
         pass
 
     @abstractmethod
-    async def read(id: int):
+    async def read(self, id: int):
         pass
 
     @abstractmethod
-    async def update(id: int, dto: UserUpdateDto):
+    async def update(self, id: int, dto: UserUpdateDto):
         pass
 
     @abstractmethod
-    async def delete(id: int):
+    async def delete(self, id: int):
         pass
+
+    @abstractmethod
+    async def _all(self):
+        """Get all users"""
+        pass
+    
