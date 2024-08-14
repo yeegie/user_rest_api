@@ -9,6 +9,7 @@ class Position(Model):
     user = fields.ForeignKeyField(
         "models.User",
         "position",
+        null=True,
         on_delete=fields.CASCADE,
     )
 
