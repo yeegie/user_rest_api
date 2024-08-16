@@ -4,14 +4,14 @@ import asyncclick as click
 
 from database import init_database
 
-from services import UserService, PositionService
+from services import UserService, RoleService
 from schemas.user import UserCreateDto
-from schemas.position import PositionCreateDto
+from app.schemas.role import RoleCreateDto
 
 from tortoise.exceptions import DoesNotExist, IntegrityError
 
 user_service = UserService()
-position_service = PositionService()
+position_service = RoleService()
 
 @click.group()
 async def cli():
@@ -78,7 +78,7 @@ async def create_position(interactive: bool, fio: str, email: str):
         name = input("name: ")
         user_id = int(input("user_id: "))
 
-    position = await PositionService.create(PositionCreateDto(
+    position = await RoleService.create(RoleCreateDto(
         name=fio,
         user_id=email,
     ))
