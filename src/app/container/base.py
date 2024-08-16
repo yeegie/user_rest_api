@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from typing import Generic, Type, TypeVar
+
+T = TypeVar("T")
 
 
 class BaseIOC(ABC):
@@ -20,14 +23,14 @@ class BaseIOC(ABC):
     """
     @abstractmethod
     def __init__(self) -> None:
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    def attach(self, key: str, value) -> None:
+    def attach(self, key: Type[T], instance: T) -> None:
         """Attach dependency to container"""
-        pass
+        raise NotImplementedError()
 
     @abstractmethod
-    def get(self, key: str) -> any:
+    def get(self, key: Type[T]) -> T:
         """Get dependency in container"""
-        pass
+        raise NotImplementedError()

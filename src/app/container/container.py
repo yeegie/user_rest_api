@@ -1,6 +1,9 @@
 __all__ = ["Container"]
 
 from .base import BaseIOC
+from typing import Generic, Type, TypeVar
+
+T = TypeVar("T")
 
 
 class Container(BaseIOC):
@@ -23,14 +26,22 @@ class Container(BaseIOC):
     def __init__(self) -> None:
         self._container = {}
 
-    def attach(self, key: str, value) -> None:
-        self._container[key] = value
+    def attach(self, key: Type[T], instance: T) -> None:
+        if not isinstance(instance, key):
+            raise TypeError(f"Instance must be type of {key}")
+        
+        self._container[key] = instance
 
-    def get(self, key: str) -> any:
+    def get(self, key: Type[T]) -> T:
         if key not in self._container.keys():
-            raise ValueError("invalid key, dependency not found.")
+            raise ValueError("Key not found.")
 
-        return self._container[key]
+        instance = self._container[key]
+
+        if not isinstance(instance, key):
+            raise TypeError(f"Stored instance is not type of {key}")        
+
+        return instance
 
     def __str__(self) -> str:
         return f"Container: {self._container}"
