@@ -3,7 +3,7 @@ from tortoise.exceptions import DoesNotExist, IntegrityError
 from schemas.user import UserSchema, UserUpdateDto, UserCreateDto
 
 from container import container
-from repositories.user import BaseUserRepository
+from repositories import DatabaseUserRepository
 from services.email import EmailService
 
 import logging
@@ -11,7 +11,7 @@ import logging
 
 class UserService():
     def __init__(self) -> None:
-        self._user_repository = container.get(BaseUserRepository)
+        self._user_repository = container.get(DatabaseUserRepository)
         self._logger = container.get(logging.Logger)
         self._email_service = EmailService()
 

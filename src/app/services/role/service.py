@@ -1,7 +1,7 @@
 from tortoise.exceptions import DoesNotExist, IntegrityError
 
 from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
-from repositories.role import RoleRepository
+from repositories import DatabaseRoleRepository
 
 import logging
 from container import container
@@ -9,7 +9,7 @@ from container import container
 
 class RoleService():
     def __init__(self) -> None:
-        self._role_repository = container.get(RoleRepository)
+        self._role_repository = container.get(DatabaseRoleRepository)
         self._logger = container.get(logging.Logger)
 
     async def create(self, dto: RoleCreateDto):
