@@ -4,31 +4,32 @@ from contextlib import asynccontextmanager
 
 from data.app_config import API
 
-from database import init_database, close_database
-from services import UserService, PositionService
-
-from container import container
+from services import DatabaseService
+from data.database_config import DataBase
 
 import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
+database_service = DatabaseService(
+    type=DataBase.type,
+    host=DataBase.host,
+    port=DataBase.port,
+    user=DataBase.user,
+    password=DataBase.password,
+    database=DataBase.database,
+)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info('[⭐] Starting app...')
-    await init_database()
+    await database_service.init_database()
 
     yield
     logger.info('[👋] Bye')
-    await close_database()
-
-# Registration dependencies
-user_service = UserService()
-position_service = PositionService()
-
-container.attach("user_service", user_service)
-container.attach("position_service", position_service)
+    await database_service.close_database()
 
 app = FastAPI(title='USER REST API', debug=True, lifespan=lifespan)
 
