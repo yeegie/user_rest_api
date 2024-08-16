@@ -1,8 +1,4 @@
-from .crud import UserCRUD
-from typing import List
-
 from tortoise.exceptions import DoesNotExist, IntegrityError
-from tortoise.query_utils import Prefetch
 
 from schemas.user import UserSchema, UserUpdateDto, UserCreateDto
 from database.models import User
@@ -11,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class UserService(UserCRUD):
+class UserService():
     def __init__(self) -> None:
         self.user = User
 

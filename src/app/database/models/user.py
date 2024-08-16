@@ -7,6 +7,8 @@ class User(Model):
     fio = fields.CharField(max_length=255, null=False)
     email = fields.CharField(max_length=255, unique=True)
 
+    position: fields.ReverseRelation['position']
+
     async def to_schema(self) -> UserSchema:
         return UserSchema(
             id=self.id,

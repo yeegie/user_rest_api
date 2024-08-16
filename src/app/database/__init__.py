@@ -1,6 +1,6 @@
 from tortoise import Tortoise
 from tortoise.exceptions import DBConnectionError
-from data.config import DataBase
+from data.database_config import DataBase
 
 import os
 import logging

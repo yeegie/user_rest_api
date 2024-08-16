@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from uvicorn import run
 from contextlib import asynccontextmanager
 
-from data.config import API
+from data.app_config import API
 
 from database import init_database, close_database
 from services import UserService, PositionService

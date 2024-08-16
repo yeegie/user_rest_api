@@ -1,5 +1,3 @@
-from .crud import PositionCRUD
-
 from tortoise.exceptions import DoesNotExist, IntegrityError
 
 from schemas.position import PositionSchema, PositionCreateDto, PositionUpdateDto
@@ -9,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class PositionService(PositionCRUD):
+class PositionService():
     def __init__(self) -> None:
         self.position = Position
 

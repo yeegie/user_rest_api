@@ -1,6 +1,6 @@
 __all__ = ["Container"]
 
-from .model import BaseIOC
+from .base import BaseIOC
 
 
 class Container(BaseIOC):

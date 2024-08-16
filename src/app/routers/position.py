@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
 from schemas.position import PositionCreateDto, PositionUpdateDto
-from services.position.position import PositionService
+from services.position.service import PositionService
 from container import container
 
 from tortoise.exceptions import DoesNotExist
