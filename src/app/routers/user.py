@@ -15,16 +15,20 @@ async def create(
     repository: Annotated[BaseUserRepository, Depends()],
 ):
     try:
-        return await user_service.create(dto)
+        return await repository.create(dto)
 
     except Exception as ex:
         raise HTTPException(500, detail=str(ex))
 
 
 @router.put('/{id}', status_code=201)
-async def update(id: int, dto: UserUpdateDto):
+async def update(
+    id: int,
+    dto: UserUpdateDto,
+    repository: Annotated[BaseUserRepository, Depends()],
+):
     try:
-        return await user_service.update(id, dto)
+        return await repository.update(id, dto)
     except DoesNotExist as ex:
         raise HTTPException(404, detail=str(ex))
     except Exception as ex:
@@ -32,9 +36,12 @@ async def update(id: int, dto: UserUpdateDto):
 
 
 @router.get('/{id}')
-async def get(id: int):
+async def get(
+    id: int,
+    repository: Annotated[BaseUserRepository, Depends()]
+):
     try:
-        return await user_service.read(user_id=id)
+        return await repository.read(user_id=id)
     except DoesNotExist as ex:
         raise HTTPException(404, detail=str(ex))
     except Exception as ex:
@@ -42,10 +49,12 @@ async def get(id: int):
 
 
 @router.delete('/{id}', status_code=204)
-async def delete(id: int):
+async def delete(
+    id: int,
+    repositiry: Annotated[BaseUserRepository, Depends()],
+):
     try:
-        await user_service.delete(id)
-        return 'ok'
+        return await repositiry.delete(id)
     except DoesNotExist as ex:
         raise HTTPException(404, detail=str(ex))
     except Exception as ex:
@@ -53,7 +62,9 @@ async def delete(id: int):
 
 
 @router.get('/')
-async def all():
+async def all(
+    repository: Annotated[BaseUserRepository, Depends()],
+):
     try:
         return await user_service._all()
     except Exception as ex:
