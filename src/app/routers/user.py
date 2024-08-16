@@ -1,15 +1,12 @@
 from fastapi import APIRouter, HTTPException, Depends
+from typing import Annotated
+
 from schemas.user import UserCreateDto, UserUpdateDto
 from tortoise.exceptions import DoesNotExist
 
-from typing import Annotated
 from repositories.user.base import BaseUserRepository
 
-from container import container
-from services import UserService
-
 router = APIRouter()
-user_service: UserService = container.get("user_service")
 
 
 @router.post('/', status_code=201)

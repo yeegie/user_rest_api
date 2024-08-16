@@ -1,12 +1,13 @@
 from pydantic import BaseModel
-from .position import PositionSchema
-from typing import Dict
+from .role import RoleSchema
+from typing import Dict, Optional
 
 
 class UserSchema(BaseModel):
     id: int
     fio: str
     email: str
+    role: Optional[RoleSchema]
 
 
 class UserCreateDto(BaseModel):
