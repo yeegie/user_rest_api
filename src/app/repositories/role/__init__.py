@@ -1,3 +1,3 @@
-from .database import RoleRepository
+from .database import DatabaseRoleRepository
 from .redis import RedisRoleRepository
 from .base import BaseRoleRepository

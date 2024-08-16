@@ -1,12 +1,16 @@
 from .base import BaseUserRepository
 from typing import List, Optional
+from tortoise import BaseDBAsyncClient
 
 from schemas.user import UserCreateDto, UserSchema, UserUpdateDto
 
+import logging
+
 
 class DatabaseUserRepository(BaseUserRepository):
-    def __init__(self) -> None:
-        pass
+    def __init__(self, session: BaseDBAsyncClient, logger: logging.Logger) -> None:
+        self._session = session
+        self._logger = logger
 
     async def create(self, create_dto: UserCreateDto) -> UserSchema:
         pass
