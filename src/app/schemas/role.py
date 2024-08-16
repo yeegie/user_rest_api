@@ -1,16 +1,16 @@
 from pydantic import BaseModel
 from typing import Optional
 
-class PositionSchema(BaseModel):
+class RoleSchema(BaseModel):
     id: int
     name: str
 
 
-class PositionCreateDto(BaseModel):
+class RoleCreateDto(BaseModel):
     name: str
     user_id: Optional[int] = None
 
 
-class PositionUpdateDto(BaseModel):
+class RoleUpdateDto(BaseModel):
     name: str
     
