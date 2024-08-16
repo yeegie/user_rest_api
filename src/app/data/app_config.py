@@ -9,7 +9,7 @@ parser = ConfigParser()
 parser.read(r'config.ini')
 
 
-class API:
+class AppConfig:
     """
     ### Store the app settings
     

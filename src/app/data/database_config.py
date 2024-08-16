@@ -9,7 +9,7 @@ parser = ConfigParser()
 parser.read(r'config.ini')
 
 
-class DataBase:
+class DataBaseConfig:
     """
     ### Store the database settings
 
