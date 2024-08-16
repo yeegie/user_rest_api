@@ -1,18 +1,17 @@
 from fastapi import APIRouter, HTTPException
 
-from schemas.position import PositionCreateDto, PositionUpdateDto
-from services.position.service import PositionService
-from container import container
-
+from schemas.role import RoleCreateDto, RoleUpdateDto
 from tortoise.exceptions import DoesNotExist
+
+from services.role.service import RoleService
+position_service = RoleService()
 
 
 router = APIRouter()
-position_service: PositionService = container.get("position_service")
 
 
 @router.post('/', status_code=201)
-async def create(dto: PositionCreateDto):
+async def create(dto: RoleCreateDto):
     try:
         await position_service.create(dto)
     except Exception as ex:
@@ -20,7 +19,7 @@ async def create(dto: PositionCreateDto):
 
 
 @router.put('/{id}', status_code=201)
-async def update(id: int, dto: PositionUpdateDto):
+async def update(id: int, dto: RoleUpdateDto):
     pass
 
 

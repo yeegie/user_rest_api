@@ -1,2 +1,2 @@
 from .user import User
-from .position import Position
+from .role import Role
