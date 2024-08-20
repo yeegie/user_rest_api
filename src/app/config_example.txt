@@ -1,11 +1,12 @@
-[API]
+[Application]
 host=127.0.0.1
 port=8000
 
 [DataBase]
-type=local  # or mysql, postgres
-host=127.0.0.1
-port=3306
-user=root
-password=password
-database=user_rest_api
+db_type=database  # or redis, memory
+db_uri=sqlite://:memory:
+    -> OR redis://localhost:6379
+    -> OR mysql://user:password@host:port/database
+    -> OR postgres://user:password@host:port/database
+    -> OR None if db_type is Memory
+    -> OR sqlite://database/database.sqlite3 

@@ -31,51 +31,62 @@ ___Before use, create a database called - user_rest_api___
 1. Example for mysql
 
 ``` ini
-[API]
+[Application]
 host=127.0.0.1
 port=8000
 
 [DataBase]
-type=mysql
-host=127.0.0.1
-port=3306
-user=root
-password=password
-database=user_rest_api
+db_type=database
+db_uri=mysql://root:password@localhost:3306/database
 ```
 
 2. Example for postgres
 
 ``` ini
-[API]
+[Application]
 host=127.0.0.1
 port=8000
 
 [DataBase]
-type=mysql
-host=127.0.0.1
-port=5432
-user=postgres
-password=password
-database=user_rest_api
+db_type=database
+db_uri=postgres://postgres:password@localhost:5432/database
 ```
 
 3. Example for local (sqlite3)
 
 ``` ini
-[API]
+[Application]
 host=127.0.0.1
 port=8000
 
 [DataBase]
-type=local
-host=127.0.0.1
-port=3306
-user=root
-password=password
-database=user_rest_api
+db_type=database
+db_type=sqlite://:memory:
 ```
 
+4. Example for redis
+
+``` ini
+[Application]
+host=127.0.0.1
+port=8000
+
+[DataBase]
+db_type=redis
+db_type=redis://localhost:6379
+```
+
+4. Example for memory
+
+``` ini
+[Application]
+host=127.0.0.1
+port=8000
+
+[DataBase]
+db_type=memory
+db_type=none
+```
 <hr>
 
 #### Run application
