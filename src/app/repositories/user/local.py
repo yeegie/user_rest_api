@@ -1,29 +1,27 @@
-__all__ = ["UserRepository"]
+__all__ = ["LocalUserRepository"]
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Optional, List
+from logging import Logger
 
 from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
-from database.models import User
 
 
-class BaseUserRepository(ABC):
-    @abstractmethod
+class LocalUserRepository(ABC):
+    def __init__(self, logger: Logger) -> None:
+        self._logger = logger
+
     async def create(self, create_dto: UserCreateDto) -> UserSchema:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def read(self, user_id: int) -> Optional[UserSchema]:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def update(self, user_id: int, update_dto: UserUpdateDto) -> bool:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def delete(self, user_id: int) -> bool:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def all(self) -> List[UserSchema]:
-        raise NotImplementedError()
+        pass

@@ -1,42 +1,78 @@
 __all__ = ["init_app"]
 
-from data.database_config import DataBaseConfig
-from services.database.service import DatabaseService
-
-from repositories import DatabaseRoleRepository, DatabaseUserRepository
-
 import logging
 from logging import Logger
 
+from data import DataBaseConfig
+
+from services import UserService, RoleService, DatabaseServiceFactory, BaseDatabaseService
+
+from repositories import RoleRepositoryFabric, UserRepositoryFabric
+
 from container import container
 
+from fastapi import FastAPI
 
-async def init_app():
+from contextlib import asynccontextmanager
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    database_service = container.get(BaseDatabaseService)
+    logger = container.get(Logger)
+
+    # DataBase
+    await database_service.init_database()
+    session = await database_service.get_session()
+
+    # Repositories
+    user_repository = UserRepositoryFabric().create_repository(
+        DataBaseConfig.db_type,
+        session,
+        logger
+    )
+    
+    role_repository = RoleRepositoryFabric().create_repository(
+        DataBaseConfig.db_type,
+        session,
+        logger
+    )
+
+    # Services
+    user_service = UserService(user_repository, logger)
+    role_service = RoleService(role_repository, logger)
+
+    # Store in container
+    container.attach(key=RoleService, instance=role_service)
+    container.attach(key=UserService, instance=user_service)
+
+    yield
+
+    await database_service.close_database()
+
+
+def init_app() -> FastAPI:
     logger = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO)
 
-    # Services
-    database_service = DatabaseService(
-        type=DataBaseConfig.type,
-        host=DataBaseConfig.host,
-        port=DataBaseConfig.port,
-        user=DataBaseConfig.user,
-        password=DataBaseConfig.password,
-        database=DataBaseConfig.database,
+    logger.info("[⭐] Starting app...")
+
+    # DataBase
+    database_service = DatabaseServiceFactory().create_service(
+        db_type=DataBaseConfig.db_type,
+        db_uri=DataBaseConfig.db_uri,
+        logger=logger,
     )
 
-    session = database_service.get_connection()
-
-    # Repositories
-    user_repository = DatabaseUserRepository(session=session, logger=logger)
-    role_repository = DatabaseRoleRepository(session=session, logger=logger)
-
     # Store in container
-    container.attach(DatabaseService, database_service)
-    
-    container.attach(DatabaseUserRepository, user_repository)
-    container.attach(DatabaseRoleRepository, role_repository)
-    
-    container.attach(Logger, logger)
+    container.attach(key=BaseDatabaseService, instance=database_service)
+    container.attach(key=Logger, instance=logger)
 
-    await database_service.init_database()
+    # FastAPI app
+    app = FastAPI(title='USER REST API', debug=True, lifespan=lifespan)
+
+    from routers import user_router, role_router
+    app.include_router(user_router, prefix='/user', tags=['user'])
+    app.include_router(role_router, prefix='/role', tags=['role'])
+
+    return app

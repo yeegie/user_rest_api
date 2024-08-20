@@ -2,70 +2,52 @@ from fastapi import APIRouter, HTTPException, Depends
 from typing import Annotated
 
 from schemas.user import UserCreateDto, UserUpdateDto
-from tortoise.exceptions import DoesNotExist
+from services import UserService
 
-from repositories.user.base import BaseUserRepository
+from container import container
+
 
 router = APIRouter()
+
+def get_service():
+    return container.get(UserService)
 
 
 @router.post('/', status_code=201)
 async def create(
     dto: UserCreateDto,
-    repository: Annotated[BaseUserRepository, Depends()],
+    service: Annotated[UserService, Depends(get_service)],
 ):
-    try:
-        return await repository.create(dto)
-
-    except Exception as ex:
-        raise HTTPException(500, detail=str(ex))
+    return await service.create(dto)
 
 
 @router.put('/{id}', status_code=201)
 async def update(
     id: int,
     dto: UserUpdateDto,
-    repository: Annotated[BaseUserRepository, Depends()],
+    service: Annotated[UserService, Depends(get_service)],
 ):
-    try:
-        return await repository.update(id, dto)
-    except DoesNotExist as ex:
-        raise HTTPException(404, detail=str(ex))
-    except Exception as ex:
-        raise HTTPException(500, detail=str(ex))
+    return await service.update(id, dto)
 
 
 @router.get('/{id}')
 async def get(
     id: int,
-    repository: Annotated[BaseUserRepository, Depends()]
+    service: Annotated[UserService, Depends(get_service)]
 ):
-    try:
-        return await repository.read(user_id=id)
-    except DoesNotExist as ex:
-        raise HTTPException(404, detail=str(ex))
-    except Exception as ex:
-        raise HTTPException(500, detail=str(ex))
+    return await service.read(id)
 
 
 @router.delete('/{id}', status_code=204)
 async def delete(
     id: int,
-    repositiry: Annotated[BaseUserRepository, Depends()],
+    service: Annotated[UserService, Depends(get_service)],
 ):
-    try:
-        return await repositiry.delete(id)
-    except DoesNotExist as ex:
-        raise HTTPException(404, detail=str(ex))
-    except Exception as ex:
-        raise HTTPException(500, detail=str(ex))
+    return await service.delete(id)
 
 
 @router.get('/')
 async def all(
-    repository: Annotated[BaseUserRepository, Depends()],
+    service: Annotated[UserService, Depends(get_service)],
 ):
-    try:
-        return await user_service._all()
-    except Exception as ex:
-        raise HTTPException(500, detail=str(ex))
+    return await service.all()

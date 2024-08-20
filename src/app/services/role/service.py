@@ -1,39 +1,27 @@
-from tortoise.exceptions import DoesNotExist, IntegrityError
-
 from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
-from repositories import DatabaseRoleRepository
-
-import logging
-from container import container
 
 
 class RoleService():
-    def __init__(self) -> None:
-        self._role_repository = container.get(DatabaseRoleRepository)
-        self._logger = container.get(logging.Logger)
+    def __init__(self, role_repository, logger) -> None:
+        self._role_repository = role_repository
+        self._logger = logger
 
     async def create(self, dto: RoleCreateDto):
-        "### Create position from dto"
-        role = await self._role_repository.create(dto=dto)
-        return await role.to_schema()
+        """### Create position from dto"""
+        return await self._role_repository.create(dto)
 
-    async def read(self, position_id: int) -> RoleSchema:
-        "### Get positon from id"
-        position = await self._role_repository.get_or_none(id=position_id)
+    async def read(self, id: int) -> RoleSchema:
+        """### Get positon from id"""
+        return await self._role_repository.read(role_id=id)
 
-        if position is None:
-            raise DoesNotExist(f'pk={position_id} | Position not found.')
-        return await position.to_schema()
+    async def update(self, id: int, dto: RoleUpdateDto):
+        """### Update user from dto by id"""
+        return await self._role_repository.update(role_id=id, dto=dto)
 
-    async def update(self, position_id: int, dto: RoleUpdateDto):
-        pass
+    async def delete(self, id: int):
+        """### Delete Role by role_id"""
+        return await self._role_repository.delete(role_id=id)
 
-    async def delete(self, position_id: int):
-        '''### Delete Position by position_id'''
-        position = await self._role_repository.get_or_none(id=position_id)
-
-        if position is None:
-            raise DoesNotExist(f'pk={position_id} | Position not found.')
-        await position.delete()
-
-        logger.info(f'[{position_id}] Position - DELETE')
+    async def all(self):
+        """### Get all roles"""
+        return await self._role_repository.all()

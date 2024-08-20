@@ -4,10 +4,10 @@ from typing import Dict, Optional
 
 
 class UserSchema(BaseModel):
-    id: int
+    id: int | str
     fio: str
     email: str
-    role: Optional[RoleSchema]
+    # role: Optional[RoleSchema]
 
 
 class UserCreateDto(BaseModel):

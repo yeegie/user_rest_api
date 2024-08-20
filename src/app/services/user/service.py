@@ -1,60 +1,31 @@
-from tortoise.exceptions import DoesNotExist, IntegrityError
-
 from schemas.user import UserSchema, UserUpdateDto, UserCreateDto
+from repositories import BaseUserRepository
 
-from container import container
-from repositories import DatabaseUserRepository
-from services.email import EmailService
-
-import logging
+from logging import Logger
 
 
 class UserService():
-    def __init__(self) -> None:
-        self._user_repository = container.get(DatabaseUserRepository)
-        self._logger = container.get(logging.Logger)
-        self._email_service = EmailService()
-
-    async def read(self, user_id: int) -> UserSchema:
-        '''### Get User by user_id'''
-        user = await self._user_repository.get_or_none(id=user_id).prefetch_related("position")
-
-        if user is None:
-            raise DoesNotExist(f'pk={user_id} | User not found.')
-        
-        return await user.to_schema()
+    def __init__(self, user_repository: BaseUserRepository, logger: Logger) -> None:
+        self._user_repository = user_repository
+        self._logger = logger
+        # self._email_service = EmailService()
 
     async def create(self, dto: UserCreateDto) -> UserSchema:
-        '''### Create User from'''
-        user = await self._user_repository.create(dto=dto)
-        await self.email_service.send_welcome_message(dto.email)
+        """### Create User from"""
+        return await self._user_repository.create(create_dto=dto)
+    
+    async def read(self, id: int) -> UserSchema:
+        """### Get User by user id"""
+        return await self._user_repository.read(user_id=id)
 
-        return await user.to_schema()
+    async def update(self, id: int, dto: UserUpdateDto) -> UserSchema:
+        """### Update User by user id"""
+        return await self._user_repository.update(user_id=id, update_dto=dto)
 
-    async def update(self, user_id: int, dto: UserUpdateDto) -> UserSchema:
-        '''### Update User by id'''
-        user = self._user_repository.get_or_none(id=user_id)
+    async def delete(self, id: int) -> None:
+        """### Delete User by user id"""
+        return await self._user_repository.delete(user_id=id)
 
-        if user is None:
-            raise DoesNotExist(f'pk={user_id} | User not found.')
-
-        user.fio = dto.fio
-        user.email = dto.email
-
-        await user.save()
-
-        return await user.to_schema()
-
-    async def delete(self, user_id: int) -> None:
-        '''### Delete User by user_id'''
-        user = await self._user_repository.get_or_none(id=user_id)
-
-        if user is None:
-            raise DoesNotExist(f'pk={user_id} | User not found.')
-        await user.delete()
-
-        self._logger.info(f'[{user_id}] User - DELETE')
-
-    async def _all(self):
-        users = await self._user_repositoryuser.all()
-        return [await users.to_schema() for users in users]
+    async def all(self):
+        """### Get all users"""
+        return await self._user_repository.all()

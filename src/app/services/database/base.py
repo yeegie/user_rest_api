@@ -18,5 +18,5 @@ class BaseDatabaseService(ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    async def get_session(self):
+    def get_session(self):
         raise NotImplementedError()

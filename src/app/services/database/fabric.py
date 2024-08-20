@@ -13,3 +13,5 @@ class DatabaseServiceFactory:
             return RedisDatabaseService(db_uri, logger)
         elif db_type == "memory":
             return MemoryDatabaseService(logger=logger)
+        else:
+            raise ValueError("Unsupported database type.")

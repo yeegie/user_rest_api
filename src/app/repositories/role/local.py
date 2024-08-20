@@ -1,28 +1,28 @@
-__all__ = ["BaseRoleRepository"]
+__all__ = ["LocalRoleRepository"]
 
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Optional, List
+from logging import Logger
 
 from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
 
 
-class BaseRoleRepository(ABC):
-    @abstractmethod
+class LocalRoleRepository(ABC):
+    def __init__(self, logger: Logger) -> None:
+        self.data: List[RoleSchema] = []
+        self._logger = logger
+        
     async def create(self, create_dto: RoleCreateDto) -> RoleSchema:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def read(self, role_id: int) -> Optional[RoleSchema]:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def update(self, role_id: int, update_dto: RoleUpdateDto) -> bool:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def delete(self, role_id: int) -> bool:
-        raise NotImplementedError()
+        pass
 
-    @abstractmethod
     async def all(self) -> List[RoleSchema]:
-        raise NotImplementedError()
+        pass
