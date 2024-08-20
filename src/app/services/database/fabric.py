@@ -1,7 +1,7 @@
 __all__ = ["DatabaseServiceFactory"]
 
 from logging import Logger
-from . import DatabaseService, RedisDatabaseService
+from . import DatabaseService, RedisDatabaseService, MemoryDatabaseService
 
 
 class DatabaseServiceFactory:
@@ -12,4 +12,4 @@ class DatabaseServiceFactory:
         elif db_type == "redis":
             return RedisDatabaseService(db_uri, logger)
         elif db_type == "memory":
-            return None
+            return MemoryDatabaseService(logger=logger)
