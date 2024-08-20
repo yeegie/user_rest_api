@@ -1,10 +1,12 @@
 from abc import ABC, abstractmethod
 from tortoise import BaseDBAsyncClient
 
+from logging import Logger
+
 
 class BaseDatabaseService(ABC):
     @abstractmethod
-    def __init__(self) -> None:
+    def __init__(self, db_uri: str, logger: Logger) -> None:
         raise NotImplementedError()
 
     @abstractmethod
@@ -16,9 +18,5 @@ class BaseDatabaseService(ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    def create_connection_string(self, database_type: str) -> str:
-        raise NotImplementedError()
-    
-    @abstractmethod
-    async def get_connection(self) -> BaseDBAsyncClient:
+    async def get_session(self):
         raise NotImplementedError()
