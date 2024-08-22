@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from typing import Optional, List
 
 from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
-from database.models import User
+from adapters.tortoise.models import User
 
 
 class BaseUserRepository(ABC):
