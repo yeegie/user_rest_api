@@ -4,7 +4,7 @@ from typing import Annotated
 from schemas.user import UserCreateDto, UserUpdateDto
 from services import UserService
 
-from container import container
+from utils.container import container
 
 
 router = APIRouter()

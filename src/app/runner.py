@@ -9,7 +9,7 @@ from services import UserService, RoleService, DatabaseServiceFactory, BaseDatab
 
 from repositories import RoleRepositoryFabric, UserRepositoryFabric
 
-from container import container
+from utils.container import container
 
 from fastapi import FastAPI
 

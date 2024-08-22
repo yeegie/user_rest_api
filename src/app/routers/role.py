@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from schemas.role import RoleCreateDto, RoleUpdateDto
 
-from container import container
+from utils.container import container
 from typing import Annotated
 from services import RoleService
 
