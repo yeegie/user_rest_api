@@ -7,47 +7,29 @@ from services import UserService
 from utils.container import container
 
 
-router = APIRouter()
+class UserRouter:
+    def __init__(self, service: UserService):
+        self.__service = service
+        self.__router = APIRouter()
 
-def get_service():
-    return container.get(UserService)
+        self.__router.add_api_route("/", self.all, methods=["GET"])
+        self.__router.add_api_route("/", self.create, methods=["POST"])
+        self.__router.add_api_route("/{id}", self.read, methods=["GET"])
+        self.__router.add_api_route("/{id}", self.update, methods=["PUT"])
+        self.__router.add_api_route("/{id}", self.delete, methods=["DELETE"])
 
+    # Routes
+    async def all(self):
+        return await self.__service.__all()
+    
+    async def create(self, dto: UserCreateDto):
+        return await self.__service.create(dto)
 
-@router.post('/', status_code=201)
-async def create(
-    dto: UserCreateDto,
-    service: Annotated[UserService, Depends(get_service)],
-):
-    return await service.create(dto)
-
-
-@router.put('/{id}', status_code=201)
-async def update(
-    id: int,
-    dto: UserUpdateDto,
-    service: Annotated[UserService, Depends(get_service)],
-):
-    return await service.update(id, dto)
-
-
-@router.get('/{id}')
-async def get(
-    id: int,
-    service: Annotated[UserService, Depends(get_service)]
-):
-    return await service.read(id)
-
-
-@router.delete('/{id}', status_code=204)
-async def delete(
-    id: int,
-    service: Annotated[UserService, Depends(get_service)],
-):
-    return await service.delete(id)
-
-
-@router.get('/')
-async def all(
-    service: Annotated[UserService, Depends(get_service)],
-):
-    return await service.all()
+    async def read(self, id: int):
+        return await self.__service.read(id)
+    
+    async def update(self, id: int, dto: UserUpdateDto):
+        return await self.__service.update(id, dto)
+    
+    async def delete(self, id: int):
+        return await self.__service.delete(id)
