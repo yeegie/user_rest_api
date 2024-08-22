@@ -1,10 +1,6 @@
-from fastapi import APIRouter, HTTPException, Depends
-from typing import Annotated
-
+from fastapi import APIRouter
 from schemas.user import UserCreateDto, UserUpdateDto
 from services import UserService
-
-from utils.container import container
 
 
 class UserRouter:
