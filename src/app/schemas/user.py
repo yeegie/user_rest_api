@@ -7,7 +7,7 @@ class UserSchema(BaseModel):
     id: int | str
     fio: str
     email: str
-    # role: Optional[RoleSchema]
+    role: Optional[str] = None
 
 
 class UserCreateDto(BaseModel):
