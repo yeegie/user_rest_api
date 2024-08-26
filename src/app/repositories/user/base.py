@@ -1,13 +1,14 @@
 __all__ = ["UserRepository"]
 
+from ..base import BaseRepository
+
 from abc import ABC, abstractmethod
 from typing import Optional, List
 
 from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
-from adapters.tortoise.models import User
 
 
-class BaseUserRepository(ABC):
+class BaseUserRepository(BaseRepository, ABC):
     @abstractmethod
     async def create(self, create_dto: UserCreateDto) -> UserSchema:
         raise NotImplementedError()

@@ -1,9 +1,9 @@
 from .base import BaseRoleRepository
 from abc import ABC
 
-from typing import List, Union
-from tortoise import BaseDBAsyncClient
-from redis import Redis
+from typing import List, Optional
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import text
 
 from schemas.role import RoleCreateDto, RoleSchema, RoleUpdateDto
 
@@ -11,27 +11,48 @@ from logging import Logger
 
 
 class DatabaseRoleRepository(BaseRoleRepository, ABC):
-    def __init__(self, session: Union[BaseDBAsyncClient, Redis], logger: Logger) -> None:
+    def __init__(self, session: AsyncSession) -> None:
         self._session = session
-        self._logger = logger
 
     async def create(self, dto: RoleCreateDto) -> RoleSchema:
-        query = await self._session.execute_query("INSERT INTO role (name, user_id) VALUES (?, ?)", [dto.name, dto.user_id])
-        return query
+        sql = text("INSERT INTO roles (name) "
+                   "VALUES (:name) "
+                   "RETURNING id")
+        async with self._session.begin():
+            result = await self._session.execute(sql, {
+                "name": dto.name,
+            })
+            role_id = result.scalar_one()
+            return RoleSchema(id=role_id, **dto.model_dump())
 
-    async def read(self, role_id: int) -> RoleSchema | None:
-        return await self._session.execute_query_dict(f"SELECT * FROM user WHERE id={role_id}")
+    async def read(self, id: int) -> Optional[RoleSchema]:
+        sql = text("SELECT * " 
+                   "FROM roles "
+                   "WHERE id = :id")
+        async with self._session.begin():
+            result = await self._session.execute(sql, {'id': id})
+            row = result.fetchone()
+            if row:
+                return RoleSchema(id=row[0], name=row[1])
+        return None
 
-    async def update(self, role_id: int, dto: RoleUpdateDto) -> bool:
+    async def update(self, id: int, dto: RoleUpdateDto) -> bool:
         pass
 
-    async def delete(self, role_id: int) -> bool:
+    async def delete(self, id: int) -> bool:
         try:
-            await self._session.execute_query(f"DELETE FROM user WHERE id={role_id}")
-            return True
+            sql = text("DELETE FROM roles "
+                       "WHERE id = :id")
+            async with self._session.begin():
+                result = await self._session.execute(sql, {"id": id})
+                return True
         except Exception as ex:
-            self._logger.error(ex)
             return False
 
-    async def all(self):  #  -> List[RoleSchema]
-        return await self._session.execute_query("SELECT * FROM role")
+    async def all(self) -> List[RoleSchema]:
+        sql = text("SELECT * "
+                   "FROM roles ")
+        async with self._session.begin():
+            result = await self._session.execute(sql)
+            rows = result.fetchall()
+            return [RoleSchema(id=row[0], name=row[1]) for row in rows]

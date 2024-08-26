@@ -1,5 +1,4 @@
+from .base import BaseUserRepository
 from .database import DatabaseUserRepository
 from .redis import RedisUserRepository
-
-from .base import BaseUserRepository
-from .fabric import UserRepositoryFabric
+from .memory import MemoryUserRepository

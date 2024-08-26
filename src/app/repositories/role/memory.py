@@ -7,7 +7,7 @@ from logging import Logger
 from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
 
 
-class LocalRoleRepository(ABC):
+class MemoryRoleRepository(ABC):
     def __init__(self, logger: Logger) -> None:
         self.data: List[RoleSchema] = []
         self._logger = logger

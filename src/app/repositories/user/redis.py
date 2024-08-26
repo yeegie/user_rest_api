@@ -1,4 +1,4 @@
-from .base import BaseUserRepository
+from repositories.base import BaseRepository
 from typing import List
 import redis.asyncio as redis
 import json
@@ -9,7 +9,7 @@ from schemas.user import UserCreateDto, UserSchema, UserUpdateDto
 import logging
 
 
-class RedisUserRepository(BaseUserRepository):
+class RedisUserRepository(BaseRepository):
     def __init__(self, session: redis.Redis, logger: logging.Logger) -> None:
         self._session = session
         self._logger = logger

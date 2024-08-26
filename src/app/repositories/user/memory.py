@@ -1,4 +1,4 @@
-__all__ = ["LocalUserRepository"]
+__all__ = ["MemoryUserRepository"]
 
 from abc import ABC
 from typing import Optional, List
@@ -7,7 +7,7 @@ from logging import Logger
 from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
 
 
-class LocalUserRepository(ABC):
+class MemoryUserRepository(ABC):
     def __init__(self, logger: Logger) -> None:
         self._logger = logger
 

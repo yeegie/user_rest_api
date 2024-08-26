@@ -1,12 +1,14 @@
 __all__ = ["BaseRoleRepository"]
 
+from ..base import BaseRepository
+
 from abc import ABC, abstractmethod
 from typing import Optional, List
 
 from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
 
 
-class BaseRoleRepository(ABC):
+class BaseRoleRepository(BaseRepository, ABC):
     @abstractmethod
     async def create(self, create_dto: RoleCreateDto) -> RoleSchema:
         raise NotImplementedError()
