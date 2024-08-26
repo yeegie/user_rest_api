@@ -3,20 +3,20 @@ from schemas.role import RoleCreateDto, RoleUpdateDto
 from services import RoleService
 
 
-class RoleRouter:
+class RoleRouter(APIRouter):
     def __init__(self, service: RoleService) -> None:
+        super().__init__()
         self.__service = service
-        self.__router = APIRouter()
 
-        self.__router.add_api_route("/", self.all, methods=["GET"])
-        self.__router.add_api_route("/", self.create, methods=["POST"])
-        self.__router.add_api_route("/{id}", self.read, methods=["GET"])
-        self.__router.add_api_route("/{id}", self.update, methods=["PUT"])
-        self.__router.add_api_route("/{id}", self.delete, methods=["DELETE"])
+        self.add_api_route("/", self.all, methods=["GET"])
+        self.add_api_route("/", self.create, methods=["POST"])
+        self.add_api_route("/{id}", self.read, methods=["GET"])
+        self.add_api_route("/{id}", self.update, methods=["PUT"])
+        self.add_api_route("/{id}", self.delete, methods=["DELETE"])
 
     # Routes
     async def all(self):
-        return await self.__service.__all()
+        return await self.__service.all()
     
     async def create(self, dto: RoleCreateDto):
         return await self.__service.create(dto)
