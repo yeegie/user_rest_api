@@ -1,5 +1,5 @@
 from data import AppConfig
-from runner import init_app
+from bootstrap.runner import init_app
 from uvicorn import run
 
 
