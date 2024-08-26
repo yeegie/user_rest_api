@@ -26,7 +26,7 @@ class Container(BaseIOC):
     def __init__(self) -> None:
         self._container = {}
 
-    def attach(self, key: Type[T], instance: T) -> None:
+    def set(self, key: Type[T], instance: T) -> None:
         if not isinstance(instance, key):
             raise TypeError(f"Instance must be type of {key}")
         
