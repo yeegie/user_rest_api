@@ -11,19 +11,19 @@ class UserService():
 
     async def create(self, dto: UserCreateDto) -> UserSchema:
         """### Create User from"""
-        return await self.__repository.create(create_dto=dto)
+        return await self.__repository.create(dto)
     
     async def read(self, id: int) -> UserSchema:
         """### Get User by user id"""
-        return await self.__repository.read(user_id=id)
+        return await self.__repository.read(id)
 
     async def update(self, id: int, dto: UserUpdateDto) -> UserSchema:
         """### Update User by user id"""
-        return await self.__repository.update(user_id=id, update_dto=dto)
+        return await self.__repository.update(id, dto)
 
     async def delete(self, id: int) -> None:
         """### Delete User by user id"""
-        return await self.__repository.delete(user_id=id)
+        return await self.__repository.delete(id)
 
     async def all(self):
         """### Get all users"""
