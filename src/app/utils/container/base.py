@@ -26,7 +26,7 @@ class BaseIOC(ABC):
         raise NotImplementedError()
 
     @abstractmethod
-    def attach(self, key: Type[T], instance: T) -> None:
+    def set(self, key: Type[T], instance: T) -> None:
         """Attach dependency to container"""
         raise NotImplementedError()
 
