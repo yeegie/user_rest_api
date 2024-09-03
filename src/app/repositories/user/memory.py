@@ -2,9 +2,7 @@ __all__ = ["MemoryUserRepository"]
 
 from abc import ABC
 from typing import Optional, List
-from logging import Logger
-
-from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
+from schemas import UserSchema, UserCreateDto, UserUpdateDto
 
 
 class MemoryUserRepository(ABC):

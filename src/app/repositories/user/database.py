@@ -2,7 +2,7 @@ from repositories.base import BaseRepository
 from typing import List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
-from schemas.user import UserCreateDto, UserSchema, UserUpdateDto
+from schemas import UserCreateDto, UserSchema, UserUpdateDto
 
 
 class DatabaseUserRepository(BaseRepository):

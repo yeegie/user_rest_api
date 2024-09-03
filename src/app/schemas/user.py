@@ -3,7 +3,7 @@ from .role import RoleSchema
 from typing import Dict, Optional
 
 
-class RoleSchema(BaseModel):
+class UserSchema(BaseModel):
     id: int | str
     fio: str
     email: str
