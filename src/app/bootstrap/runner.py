@@ -9,6 +9,7 @@ from utils.container import ioc
 from factories.repository_manager import RepositoryManager
 from factories.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
 from services import UserService, RoleService
+from repositories import BaseRoleRepository, BaseUserRepository
 
 
 def init_app() -> FastAPI:
@@ -52,5 +53,12 @@ def init_app() -> FastAPI:
 
     app.include_router(user_router, prefix='/user', tags=['user'])
     app.include_router(role_router, prefix='/role', tags=['role'])
+
+    # Store in IOC
+    ioc.set(UserService, user_service)
+    ioc.set(RoleService, role_service)
+    ioc.set(logging.Logger, logger)
+    # ioc.set(BaseUserRepository, user_repository)
+    # ioc.set(BaseRoleRepository, role_repository)
 
     return app
