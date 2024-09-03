@@ -1,20 +1,20 @@
 import asyncio
 import click
 from services import UserService
-from schemas.user import RoleSchema, RoleCreateDto, UserUpdateDto
-from typing import List
+from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
+
 
 class UserCommands:
     def __init__(self, service: UserService):
         self.__service = service
 
     def create(self, fio: str, email: str):
-        dto = RoleCreateDto(
+        dto = UserCreateDto(
             fio=fio,
             email=email,
         )
 
-        new_user: RoleSchema = asyncio.run(
+        new_user: UserSchema = asyncio.run(
             self.__service.create(dto)
         )
         click.echo(f'[{new_user.id}] User added\nfio={new_user.fio}\nemail={new_user.email}')
