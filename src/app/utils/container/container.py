@@ -28,13 +28,13 @@ class Container(BaseIOC):
 
     def set(self, key: Type[T], instance: T) -> None:
         if not isinstance(instance, key):
-            raise TypeError(f"Instance must be type of {key}")
+            raise TypeError(f"Instance [{key}] must be type of [{key}]")
         
         self._container[key] = instance
 
     def get(self, key: Type[T]) -> T:
         if key not in self._container.keys():
-            raise ValueError("Key not found.")
+            raise ValueError(f"Key[{key}] not found.")
 
         instance = self._container[key]
 
