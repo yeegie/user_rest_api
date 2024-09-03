@@ -1,3 +1,3 @@
 from .database import DatabaseRoleRepositoryFactory
-# from .redis import ____
-# from .memory import ____
+from .redis import RedisRoleRepositoryFactory
+from .memory import MemoryRoleRepositoryFactory

@@ -7,7 +7,7 @@ from data.database_config import database_config
 
 from utils.container import ioc
 from factories.repository_manager import RepositoryManager
-from factories.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory
+from factories.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
 from services import UserService, RoleService
 
 
@@ -18,6 +18,7 @@ def init_app() -> FastAPI:
     # Repositories
     repository_manager = RepositoryManager()
 
+    # Database type
     repository_manager.set(entity="user",
                            database_type="database",
                            repository=DatabaseUserRepositoryFactory())
@@ -25,6 +26,15 @@ def init_app() -> FastAPI:
     repository_manager.set(entity="role",
                            database_type="database",
                            repository=DatabaseRoleRepositoryFactory())
+    
+    # Memory type
+    repository_manager.set(entity="user",
+                           database_type="memory",
+                           repository=MemoryUserRepositoryFactory())
+    
+    repository_manager.set(entity="role",
+                           database_type="memory",
+                           repository=MemoryRoleRepositoryFactory())
 
     role_repository = repository_manager.get("role", database_config.db_type)
     user_repository = repository_manager.get("user", database_config.db_type)
