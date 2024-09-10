@@ -1,4 +1,4 @@
-from repositories.base import BaseRepository
+from app.repositories.BaseRepository import BaseRepository
 from typing import List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text

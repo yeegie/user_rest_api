@@ -1,12 +1,12 @@
-__all__ = ["Container"]
+__all__ = ["IOC"]
 
-from .base import BaseIOC
+from .Ioc import BaseIOC
 from typing import Generic, Type, TypeVar
 
 T = TypeVar("T")
 
 
-class Container(BaseIOC):
+class IOC(BaseIOC):
     """
     ### IoC Container
     Store dependencies by key-value principe

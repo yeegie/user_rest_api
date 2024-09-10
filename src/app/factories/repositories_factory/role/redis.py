@@ -1,6 +1,6 @@
-from repositories.base import BaseRepository
+from app.repositories.BaseRepository import BaseRepository
 from repositories.role import RedisRoleRepository
-from ..base import BaseRepositoryFactory
+from ..BaseRepositoryFactory import BaseRepositoryFactory
 
 
 class RedisRoleRepositoryFactory(BaseRepositoryFactory):

@@ -1,7 +1,7 @@
 __all__ = ["user_group"]
 
 from services import UserService
-from utils.container import ioc
+from utils.ioc import ioc
 from cli.user.user import UserCommands
 import click
 

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from repositories.base import BaseRepository
+from app.repositories.BaseRepository import BaseRepository
 
 
 class BaseRepositoryFactory(ABC):

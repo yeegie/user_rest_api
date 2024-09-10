@@ -1,7 +1,7 @@
 __all__ = ["role_group"]
 
 from services import RoleService
-from utils.container import ioc
+from utils.ioc import ioc
 from cli.role.role import RoleCommands
 import click
 

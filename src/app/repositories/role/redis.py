@@ -1,4 +1,4 @@
-from .base import BaseRoleRepository
+from .BaseRoleRepository import BaseRoleRepository
 from abc import ABC
 from typing import List, Optional
 from schemas.role import RoleCreateDto, RoleSchema, RoleUpdateDto

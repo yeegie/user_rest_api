@@ -1,6 +1,6 @@
-from repositories.base import BaseRepository
+from app.repositories.BaseRepository import BaseRepository
 from repositories.role import DatabaseRoleRepository
-from ..base import BaseRepositoryFactory
+from ..BaseRepositoryFactory import BaseRepositoryFactory
 from adapters.sqlalchemy.session import SqlalchemySessionCreator
 from data.database_config import database_config
 

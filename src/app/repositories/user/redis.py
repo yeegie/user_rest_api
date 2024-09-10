@@ -1,4 +1,4 @@
-from repositories.base import BaseRepository
+from app.repositories.BaseRepository import BaseRepository
 from typing import List
 import redis.asyncio as redis
 import json

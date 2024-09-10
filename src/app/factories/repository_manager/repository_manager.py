@@ -1,5 +1,5 @@
-from factories.repositories_factory.base import BaseRepositoryFactory
-from .base import BaseRepositoryManager
+from app.factories.repositories_factory.BaseRepositoryFactory import BaseRepositoryFactory
+from .BaseRepositoryManager import BaseRepositoryManager
 from typing import Dict
 
 

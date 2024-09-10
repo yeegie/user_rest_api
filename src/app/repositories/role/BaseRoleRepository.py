@@ -1,6 +1,6 @@
 __all__ = ["BaseRoleRepository"]
 
-from ..base import BaseRepository
+from ..BaseRepository import BaseRepository
 
 from abc import ABC, abstractmethod
 from typing import Optional, List
