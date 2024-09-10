@@ -45,6 +45,15 @@ class DatabaseUserRepository(BaseRepository):
         except Exception as ex:
             return False
 
+    async def is_email_unique(self, email: str) -> bool:
+        """Check if the email is unique in the users"""
+        sql = text("SELECT COUNT(1) "
+                   "FROM users "
+                   "WHERE email = :email")
+        async with self._session.begin():
+            result = await self._session.execute(sql, {'email': email})
+            return result.scalar() == 0
+
     async def all(self) -> List[UserSchema]:
         sql = text("SELECT * "
                    "FROM users "

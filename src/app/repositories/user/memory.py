@@ -53,6 +53,13 @@ class MemoryUserRepository(ABC):
             return True
         except:
             return False
+        
+    async def is_email_unique(self, email: str) -> bool:
+        """Check if the email is unique in data"""
+        for user in self._data:
+            if user.email == email:
+                return False
+        return True
 
     async def all(self) -> List[UserSchema]:
         return self._data

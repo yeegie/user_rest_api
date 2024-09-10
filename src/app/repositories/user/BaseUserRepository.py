@@ -24,6 +24,10 @@ class BaseUserRepository(BaseRepository, ABC):
     @abstractmethod
     async def delete(self, user_id: int) -> bool:
         raise NotImplementedError()
+    
+    @abstractmethod
+    async def is_email_unique(self, email: str) -> bool:
+        raise NotImplementedError()
 
     @abstractmethod
     async def all(self) -> List[UserSchema]:

@@ -11,6 +11,10 @@ class UserService():
 
     async def create(self, dto: UserCreateDto) -> UserSchema:
         """### Create User from"""
+        unique = await self.__repository.is_email_unique(dto.email)
+        if unique is False:
+            raise ValueError(f"User with email {dto.email} already exists.")
+
         return await self.__repository.create(dto)
     
     async def read(self, id: int) -> UserSchema:
