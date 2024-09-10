@@ -5,14 +5,14 @@ import logging
 
 from data.database_config import database_config
 
-from utils.container import ioc
+from utils.ioc import ioc
 from factories.repository_manager import RepositoryManager
 from factories.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
 from services import UserService, RoleService
 from repositories import BaseRoleRepository, BaseUserRepository
 
 
-def init_app() -> FastAPI:
+def init_app() -> None:
     logger = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO)
 
@@ -44,21 +44,9 @@ def init_app() -> FastAPI:
     user_service = UserService(user_repository, logger)
     role_service = RoleService(role_repository, logger)
 
-    app = FastAPI(title='USER REST API', debug=True)
-
-    from routers import UserRouter, RoleRouter
-
-    user_router = UserRouter(user_service)
-    role_router = RoleRouter(role_service)
-
-    app.include_router(user_router, prefix='/user', tags=['user'])
-    app.include_router(role_router, prefix='/role', tags=['role'])
-
     # Store in IOC
+    ioc.set(logging.Logger, logger)
     ioc.set(UserService, user_service)
     ioc.set(RoleService, role_service)
-    ioc.set(logging.Logger, logger)
     # ioc.set(BaseUserRepository, user_repository)
     # ioc.set(BaseRoleRepository, role_repository)
-
-    return app
