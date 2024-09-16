@@ -1,23 +1,28 @@
-__all__ = ["init_app", "configurate_app"]
+__all__ = ["init_app"]
 
 from fastapi import FastAPI
 import logging
 
-from data.database_config import database_config
-
-from utils.ioc import ioc
-from factories.repository_manager import RepositoryManager
-from factories.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
-from services import UserService, RoleService
-from repositories import BaseRoleRepository, BaseUserRepository
+from app.utils.ioc import ioc
+from app.factories.config import ConfigFactoryManager, IniConfigFactory, DatabaseSettings
+from app.factories.repository.repository_manager import RepositoryManager
+from app.factories.repository.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
+from app.services import UserService, RoleService
 
 
-def init_app() -> None:
+def init_app(
+        config_path: str
+) -> None:
     logger = logging.getLogger(__name__)
     logging.basicConfig(level=logging.INFO)
 
+    # Config
+    config_manager = ConfigFactoryManager()
+    config_manager.set(IniConfigFactory())
+    config = config_manager.get(config_path)
+
     # Repositories
-    repository_manager = RepositoryManager()
+    repository_manager = RepositoryManager(DatabaseSettings(**config.settings["database"]))
 
     # Database type
     repository_manager.set(entity="user",
@@ -26,8 +31,7 @@ def init_app() -> None:
     
     repository_manager.set(entity="role",
                            database_type="database",
-                           repository=DatabaseRoleRepositoryFactory())
-    
+                           repository=DatabaseRoleRepositoryFactory())    
     # Memory type
     repository_manager.set(entity="user",
                            database_type="memory",
@@ -37,8 +41,10 @@ def init_app() -> None:
                            database_type="memory",
                            repository=MemoryRoleRepositoryFactory())
 
-    role_repository = repository_manager.get("role", database_config.db_type)
-    user_repository = repository_manager.get("user", database_config.db_type)
+    
+    repository_type = config.settings["application"]["repository_type"]
+    role_repository = repository_manager.get("role", repository_type)
+    user_repository = repository_manager.get("user", repository_type)
 
     # Services
     user_service = UserService(user_repository, logger)
