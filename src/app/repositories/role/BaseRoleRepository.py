@@ -5,7 +5,7 @@ from ..BaseRepository import BaseRepository
 from abc import ABC, abstractmethod
 from typing import Optional, List
 
-from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
+from app.repositories.schemas import RoleSchema, RoleCreateDto, RoleUpdateDto
 
 
 class BaseRoleRepository(BaseRepository, ABC):

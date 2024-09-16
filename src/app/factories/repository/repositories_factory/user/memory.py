@@ -1,8 +1,9 @@
 from app.repositories.BaseRepository import BaseRepository
-from repositories.role import RedisRoleRepository
+from app.repositories.user import MemoryUserRepository
 from ..BaseRepositoryFactory import BaseRepositoryFactory
 
 
-class RedisRoleRepositoryFactory(BaseRepositoryFactory):
+class MemoryUserRepositoryFactory(BaseRepositoryFactory):
     def get_instance(self) -> BaseRepository:
-        return RedisRoleRepository()
+        return MemoryUserRepository()
+

@@ -1,5 +1,5 @@
 from app.repositories.BaseRepository import BaseRepository
-from repositories.user import RedisUserRepository
+from app.repositories.user import RedisUserRepository
 from ..BaseRepositoryFactory import BaseRepositoryFactory
 
 
