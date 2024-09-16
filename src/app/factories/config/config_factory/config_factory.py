@@ -1,6 +1,9 @@
-__all__ = ["IniConfigFactory", "YmlConfigFactory"]
+__all__ = [
+    "IniConfigFactory", 
+    "YmlConfigFactory",
+]
 
-from .config_schemas import ConfigSchema
+from ..config_schemas import ConfigSchema
 from .ConfigFactory import BaseConfigFactory
 
 from configparser import ConfigParser

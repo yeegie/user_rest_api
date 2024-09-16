@@ -1,7 +1,7 @@
 __all__ = ["BaseConfigFactory"]
 
 from abc import ABC, abstractmethod
-from .config_schemas import ConfigSchema
+from ..config_schemas import ConfigSchema
 
 
 class BaseConfigFactory(ABC):
