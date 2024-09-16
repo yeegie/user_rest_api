@@ -1,6 +1,9 @@
 from app.repositories.schemas import UserSchema, UserUpdateDto, UserCreateDto
 from app.repositories import BaseUserRepository
 
+from app.email_server import EmailServer
+from utils.ioc import ioc
+
 from logging import Logger
 
 
@@ -15,7 +18,16 @@ class UserService():
         if unique is False:
             raise ValueError(f"User with email {dto.email} already exists.")
 
-        return await self.__repository.create(dto)
+        created_user = await self.__repository.create(dto)
+        
+        email_server = ioc.get(EmailServer)
+        email_server.send_email(
+            dto.email,
+            "Welcome Message",
+            f"Hello, {dto.fio}!",
+        )
+
+        return created_user
     
     async def read(self, id: int) -> UserSchema:
         """### Get User by user id"""
