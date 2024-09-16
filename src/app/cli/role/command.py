@@ -1,8 +1,8 @@
 __all__ = ["role_group"]
 
-from services import RoleService
-from utils.ioc import ioc
-from cli.role.role import RoleCommands
+from app.services import RoleService
+from app.utils.ioc import ioc
+from app.cli.role.role import RoleCommands
 import click
 
 

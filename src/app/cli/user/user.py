@@ -1,7 +1,7 @@
 import asyncio
 import click
-from services import UserService
-from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
+from app.services import UserService
+from app.repositories.schemas import UserSchema, UserCreateDto, UserUpdateDto
 
 
 class UserCommands:

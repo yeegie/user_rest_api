@@ -1,7 +1,7 @@
 import asyncio
 import click
-from services import RoleService
-from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
+from app.services import RoleService
+from app.repositories.schemas import RoleSchema, RoleCreateDto, RoleUpdateDto
 
 
 class RoleCommands:
