@@ -1,0 +1,13 @@
+[Application]
+repository_type=database
+host=127.0.0.1
+port=8000
+debug=True
+
+[DataBase]
+db_type=mysql
+host=127.0.0.1
+port=3306
+user=root
+password=password
+database=database

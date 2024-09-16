@@ -32,66 +32,82 @@ ___Before use, create a database called - user_rest_api___
 
 ``` ini
 [Application]
+repository_type=database
 host=127.0.0.1
 port=8000
+debug=True
 
 [DataBase]
-db_type=database
-db_uri=mysql://root:password@localhost:3306/database
+db_type=mysql
+host=127.0.0.1
+port=3306
+user=root
+password=password
+database=database
 ```
 
 2. Example for postgres
 
 ``` ini
 [Application]
+repository_type=database
 host=127.0.0.1
 port=8000
+debug=True
 
 [DataBase]
-db_type=database
-db_uri=postgres://postgres:password@localhost:5432/database
+db_type=postgres
+host=127.0.0.1
+port=5432
+user=postgres
+password=password
+database=database
 ```
 
-3. Example for local (sqlite3)
+3. Example for memory
 
 ``` ini
 [Application]
+repository_type=memory
 host=127.0.0.1
 port=8000
+debug=True
 
 [DataBase]
-db_type=database
-db_type=sqlite://:memory:
+db_type=any
+host=any
+port=1111
+user=any
+password=any
+database=any
 ```
 
 4. Example for redis
 
 ``` ini
 [Application]
+repository_type=redis
 host=127.0.0.1
 port=8000
+debug=True
 
 [DataBase]
-db_type=redis
-db_type=redis://localhost:6379
-```
-
-4. Example for memory
-
-``` ini
-[Application]
+db_type=any
 host=127.0.0.1
-port=8000
-
-[DataBase]
-db_type=memory
-db_type=none
+port=6379
+user=any
+password=any
+database=database
 ```
+
 <hr>
 
 #### Run application
+
+
 ``` bash
-python main.py
+pip install -e .
+user_rest_api
 ```
 
 Example of successful launch of the application:
