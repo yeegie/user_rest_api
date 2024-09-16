@@ -11,3 +11,11 @@ port=3306
 user=root
 password=password
 database=database
+
+
+[SMTP]
+host="localhost"
+port=587
+tls=True
+password=qwerty123456
+email_from=user293120@gmail.com

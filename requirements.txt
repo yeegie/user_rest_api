@@ -5,12 +5,17 @@ fastapi==0.114.0
 greenlet==3.0.3
 h11==0.14.0
 idna==3.8
+mysql-connector-python==9.0.0
 pydantic==2.9.1
 pydantic_core==2.23.3
+PyMySQL==1.1.1
 PyYAML==6.0.2
 redis==5.0.8
+setuptools==75.0.0
 sniffio==1.3.1
 SQLAlchemy==2.0.34
 starlette==0.38.5
 typing_extensions==4.12.2
+-e git+https://github.com/yeegie/user_rest_api.git@2437cd2fb1b94fa7d3bc8832233e58a7131cb5fa#egg=user_api
 uvicorn==0.30.6
+wheel==0.44.0
