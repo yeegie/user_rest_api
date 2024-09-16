@@ -2,7 +2,7 @@ from app.repositories.schemas import UserSchema, UserUpdateDto, UserCreateDto
 from app.repositories import BaseUserRepository
 
 from app.email_server import EmailServer
-from utils.ioc import ioc
+from app.utils.ioc import ioc
 
 from logging import Logger
 
