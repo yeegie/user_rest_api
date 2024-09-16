@@ -14,5 +14,11 @@ setup(
     url="https://github.com/yeegie/user_rest_api",
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    install_requires=required
+    install_requires=required,
+	entry_points={
+        'console_scripts': [
+            'user_rest_api = bin.api.main:main',
+			'user_rest_cli = bin.cli.main:main',
+        ],
+    },
 )
