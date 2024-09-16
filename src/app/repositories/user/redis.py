@@ -4,7 +4,7 @@ import redis.asyncio as redis
 import json
 import uuid
 
-from schemas.user import UserCreateDto, UserSchema, UserUpdateDto
+from app.repositories.schemas import UserCreateDto, UserSchema, UserUpdateDto
 
 import logging
 

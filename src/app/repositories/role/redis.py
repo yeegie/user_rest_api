@@ -1,7 +1,7 @@
 from .BaseRoleRepository import BaseRoleRepository
 from abc import ABC
 from typing import List, Optional
-from schemas.role import RoleCreateDto, RoleSchema, RoleUpdateDto
+from app.repositories.schemas import RoleCreateDto, RoleSchema, RoleUpdateDto
 
 import redis.asyncio as redis
 from logging import Logger

@@ -4,7 +4,7 @@ from abc import ABC
 from typing import Optional, List
 from logging import Logger
 
-from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
+from app.repositories.schemas import RoleSchema, RoleCreateDto, RoleUpdateDto
 
 
 class MemoryRoleRepository(ABC):

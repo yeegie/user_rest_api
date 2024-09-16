@@ -5,7 +5,7 @@ from typing import List, Optional
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import text
 
-from schemas.role import RoleCreateDto, RoleSchema, RoleUpdateDto
+from app.repositories.schemas import RoleCreateDto, RoleSchema, RoleUpdateDto
 
 from logging import Logger
 
