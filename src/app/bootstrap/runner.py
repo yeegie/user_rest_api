@@ -8,6 +8,7 @@ from app.factories.config import ConfigFactoryManager, IniConfigFactory, Databas
 from app.factories.repository.repository_manager import RepositoryManager
 from app.factories.repository.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
 from app.services import UserService, RoleService
+from app.email_server import EmailServer
 
 
 def init_app(
@@ -22,7 +23,7 @@ def init_app(
     config = config_manager.get(config_path)
 
     # Repositories
-    repository_manager = RepositoryManager(DatabaseSettings(**config.settings["database"]))
+    repository_manager = RepositoryManager(DatabaseSettings(config.database))
 
     # Database type
     repository_manager.set(entity="user",
@@ -42,7 +43,7 @@ def init_app(
                            repository=MemoryRoleRepositoryFactory())
 
     
-    repository_type = config.settings["application"]["repository_type"]
+    repository_type = config.settings.application.repository_type
     role_repository = repository_manager.get("role", repository_type)
     user_repository = repository_manager.get("user", repository_type)
 
@@ -50,9 +51,15 @@ def init_app(
     user_service = UserService(user_repository, logger)
     role_service = RoleService(role_repository, logger)
 
+    # SMTP
+    if config.smtp:
+        email_server = EmailServer(
+            logger=logger,
+            config=config.smtp,
+        )
+        ioc.set(EmailServer, email_server)
+
     # Store in IOC
     ioc.set(logging.Logger, logger)
     ioc.set(UserService, user_service)
     ioc.set(RoleService, role_service)
-    # ioc.set(BaseUserRepository, user_repository)
-    # ioc.set(BaseRoleRepository, role_repository)
