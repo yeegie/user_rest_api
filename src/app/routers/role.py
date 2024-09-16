@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from schemas.role import RoleCreateDto, RoleUpdateDto
-from services import RoleService
+from app.repositories.schemas import RoleCreateDto, RoleUpdateDto
+from app.services import RoleService
 
 
 class RoleRouter(APIRouter):

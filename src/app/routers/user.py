@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from schemas.user import UserCreateDto, UserUpdateDto
-from services import UserService
+from app.repositories.schemas import UserCreateDto, UserUpdateDto
+from app.services import UserService
 
 
 class UserRouter(APIRouter):

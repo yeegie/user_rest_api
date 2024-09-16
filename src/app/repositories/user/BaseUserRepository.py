@@ -5,7 +5,7 @@ from ..BaseRepository import BaseRepository
 from abc import ABC, abstractmethod
 from typing import Optional, List
 
-from schemas.user import UserSchema, UserCreateDto, UserUpdateDto
+from app.repositories.schemas import UserSchema, UserCreateDto, UserUpdateDto
 
 
 class BaseUserRepository(BaseRepository, ABC):

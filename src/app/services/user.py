@@ -1,5 +1,5 @@
-from schemas.user import UserSchema, UserUpdateDto, UserCreateDto
-from repositories import BaseUserRepository
+from app.repositories.schemas import UserSchema, UserUpdateDto, UserCreateDto
+from app.repositories import BaseUserRepository
 
 from logging import Logger
 

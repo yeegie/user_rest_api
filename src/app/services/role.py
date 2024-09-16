@@ -1,5 +1,5 @@
-from schemas.role import RoleSchema, RoleCreateDto, RoleUpdateDto
-from repositories import BaseRoleRepository
+from app.repositories.schemas import RoleSchema, RoleCreateDto, RoleUpdateDto
+from app.repositories import BaseRoleRepository
 from logging import Logger
 
 
