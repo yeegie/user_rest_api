@@ -2,7 +2,7 @@ from app.repositories.BaseRepository import BaseRepository
 from app.repositories.role import DatabaseRoleRepository
 from ..BaseRepositoryFactory import BaseRepositoryFactory
 from app.adapters.sqlalchemy.session import SqlalchemySessionCreator
-from app.factories.config import DatabaseSettings
+from app.factories.config.config_schemas import DatabaseSettings
 
 
 class DatabaseRoleRepositoryFactory(BaseRepositoryFactory):

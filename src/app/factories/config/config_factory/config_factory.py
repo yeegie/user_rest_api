@@ -21,6 +21,9 @@ class IniConfigFactory(BaseConfigFactory):
         parser = ConfigParser()
         parser.read(filepath)
 
+        if filepath.split('/')[-1] not in os.listdir():
+            raise FileNotFoundError(f"File {filepath.split('/')[-1]} not found in [{os.listdir()}]") 
+
         return ConfigSchema(
             config_type=self.type,
             settings={str.lower(section): dict(parser.items(section)) for section in parser.sections()},

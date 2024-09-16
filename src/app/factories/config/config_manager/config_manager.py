@@ -1,6 +1,6 @@
 from .BaseConfigManager import BaseConfigManager
 from ..config_factory.config_factory import BaseConfigFactory
-from ..config_factory.config_schemas import ConfigSchema
+from app.factories.config.config_schemas import ConfigSchema
 from typing import Dict
 import os
 

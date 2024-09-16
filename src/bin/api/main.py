@@ -10,7 +10,7 @@ from app.utils.ioc import ioc
 
 def main():
     init_app(
-        config_path="../config.ini"
+        config_path="config.ini"
     )
 
     app = FastAPI(title='USER REST API', debug=True)
@@ -23,8 +23,8 @@ def main():
 
     run(
         app,
-        host="localhost",
-        port="8000",
+        host="127.0.0.1",
+        port=8000,
     )
 
 
