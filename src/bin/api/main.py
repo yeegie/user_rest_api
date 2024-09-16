@@ -1,18 +1,18 @@
 from fastapi import FastAPI
-from routers import UserRouter, RoleRouter
+from app.routers import UserRouter, RoleRouter
 from uvicorn import run
 
-from data import AppConfig
-from bootstrap.runner import init_app
+from app.bootstrap.runner import init_app
 
-from services import UserService, RoleService
-from utils.ioc import ioc
-
+from app.services import UserService, RoleService
+from app.utils.ioc import ioc
 
 
-if __name__ == '__main__':
-    init_app()
-    
+def main():
+    init_app(
+        config_path="../config.ini"
+    )
+
     app = FastAPI(title='USER REST API', debug=True)
 
     user_router = UserRouter(ioc.get(UserService))
@@ -21,9 +21,12 @@ if __name__ == '__main__':
     app.include_router(user_router, prefix='/user', tags=['user'])
     app.include_router(role_router, prefix='/role', tags=['role'])
 
-
     run(
         app,
-        host=AppConfig.host,
-        port=AppConfig.port,
+        host="localhost",
+        port="8000",
     )
+
+
+if __name__ == '__main__':
+    main()
