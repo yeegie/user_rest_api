@@ -4,7 +4,7 @@ import click
 from sqlalchemy.ext.asyncio import create_async_engine
 from app.repositories.models import Base
 
-from factories.config.config_schemas import DatabaseSettings
+from app.factories.config.config_schemas import DatabaseSettings
 
 
 class DatabaseCommands:

@@ -1,10 +1,17 @@
 __all__ = ["database_group"]
 
-from cli.database.database import DatabaseCommands
 import click
+from app.cli.database.database import DatabaseCommands
+from app.utils.ioc import ioc
+from app.factories.config import ConfigSchema, DatabaseSettings
 
 
-database_commands = DatabaseCommands()
+config = ioc.get(ConfigSchema)
+database_commands = DatabaseCommands(
+    config=DatabaseSettings(
+        **config.settings["database"]
+    )
+)
 
 
 # Commands
