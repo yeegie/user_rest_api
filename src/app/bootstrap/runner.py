@@ -57,6 +57,7 @@ def init_app(
             logger=logger,
             config=config.smtp,
         )
+        email_server.connect()
         ioc.set(EmailServer, email_server)
 
     # Store in IOC
