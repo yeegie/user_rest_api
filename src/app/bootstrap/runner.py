@@ -4,7 +4,7 @@ from fastapi import FastAPI
 import logging
 
 from app.utils.ioc import ioc
-from app.factories.config import ConfigFactoryManager, IniConfigFactory, YmlConfigFactory, DatabaseSettings
+from app.factories.config import ConfigFactoryManager, IniConfigFactory, DatabaseSettings, ConfigSchema
 from app.factories.config.config_schemas import EmailSettings
 from app.factories.repository.repository_manager import RepositoryManager
 from app.factories.repository.repositories_factory import DatabaseUserRepositoryFactory, DatabaseRoleRepositoryFactory, MemoryRoleRepositoryFactory, MemoryUserRepositoryFactory
@@ -65,3 +65,4 @@ def init_app(
     ioc.set(logging.Logger, logger)
     ioc.set(UserService, user_service)
     ioc.set(RoleService, role_service)
+    ioc.set(ConfigSchema, config)
