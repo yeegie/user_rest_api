@@ -3,7 +3,7 @@ __all__ = [
 ]
 
 from logging import Logger
-from app.factories.config.config_schemas import EmailSettings
+from app.infrastructure.config import SmtpConfig
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -14,7 +14,7 @@ class EmailServer():
     def __init__(
         self,
         logger: Logger,
-        config: EmailSettings
+        config: SmtpConfig
     ) -> None:
         self.__logger = logger
         self.__config = config

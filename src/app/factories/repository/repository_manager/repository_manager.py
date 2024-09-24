@@ -1,11 +1,11 @@
 from ..repositories_factory.BaseRepositoryFactory import BaseRepositoryFactory
 from .BaseRepositoryManager import BaseRepositoryManager
 from typing import Dict
-from app.factories.config import DatabaseSettings
+from app.infrastructure.config import DatabaseConfig
 
 
 class RepositoryManager(BaseRepositoryManager):
-    def __init__(self, database_config: DatabaseSettings) -> None:
+    def __init__(self, database_config: DatabaseConfig) -> None:
         self._database_config = database_config
         self._repositories: Dict[str, Dict[str, BaseRepositoryFactory]] = {}
 

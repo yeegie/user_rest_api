@@ -1,13 +1,13 @@
 __all__ = [
-    "AppSettings",
+    "AppConfig"
 ]
 
 
 from pydantic import BaseModel
 
 
-class AppSettings(BaseModel):
+class AppConfig(BaseModel):
     repository_type: str
     host: str = "localhost"
-    port: int
-    debug: bool
+    port: int = 8000
+    debug: bool = False

@@ -1,9 +1,11 @@
-from app.bootstrap.runner import init_app
+from app.infrastructure.bootstrap.runner import init_app
 
 
 def main():
     init_app(
-        config_path="./config.ini"
+        app_config_path="./config/app.yaml",
+        database_config_path="./config/database.yaml",
+        smtp_config_path="./config/smtp.yaml",
     )
 
     from app.cli import register_commands

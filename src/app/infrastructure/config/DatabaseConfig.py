@@ -1,12 +1,12 @@
 __all__ = [
-    "DatabaseSettings",
+    "DatabaseConfig"
 ]
 
 
 from pydantic import BaseModel, SecretStr
 
 
-class DatabaseSettings(BaseModel):
+class DatabaseConfig(BaseModel):
     db_type: str
     host: str = "localhost"
     port: int
